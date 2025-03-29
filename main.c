@@ -31,6 +31,7 @@ int main(int argc, char **argv) {
   }
 
   state_free(s);
+  instruct_vec_free(instructs);
   fclose(f);
 
   return EXIT_SUCCESS;
