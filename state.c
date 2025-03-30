@@ -21,9 +21,7 @@ void state_free(struct state *s) {
 
 void state_process_token(struct state *s, char c,
                          struct instruct_vec *instructs) {
-  int c_changed = s->prev_c != c;
-
-  if (c_changed) {
+  if (s->prev_c != c) {
     switch (s->prev_c) {
     case TK_MOVE_RIGHT:
       instruct_vec_push(instructs, instruct_move_right(s->move_right_amount));
