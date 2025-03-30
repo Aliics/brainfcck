@@ -1,4 +1,5 @@
 #include "instruct.h"
+#include <stdio.h>
 
 struct instruct instruct_move_right(int n) {
   return (struct instruct){
@@ -50,4 +51,33 @@ struct instruct instruct_read() {
   return (struct instruct){
       .type = INST_READ,
   };
+}
+
+void instruct_sprint(struct instruct inst, char *dest) {
+  switch (inst.type) {
+  case INST_MOVE_RIGHT:
+    sprintf(dest, "move_right=%d", inst.data.move_right_amount);
+    break;
+  case INST_MOVE_LEFT:
+    sprintf(dest, "move_left=%d", inst.data.move_left_amount);
+    break;
+  case INST_INC:
+    sprintf(dest, "inc=%d", inst.data.inc_amount);
+    break;
+  case INST_DEC:
+    sprintf(dest, "dec=%d", inst.data.dec_amount);
+    break;
+  case INST_LOOP_START:
+    sprintf(dest, "loop_start");
+    break;
+  case INST_LOOP_END:
+    sprintf(dest, "loop_end");
+    break;
+  case INST_WRITE:
+    sprintf(dest, "write");
+    break;
+  case INST_READ:
+    sprintf(dest, "read");
+    break;
+  }
 }

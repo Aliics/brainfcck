@@ -7,6 +7,8 @@ struct state *state_new() {
   struct state *s = malloc(sizeof(struct state));
   s->comment_buffer = int_vec_new(256);
   s->prev_c = -1; // Ensure that it won't somehow match.
+  s->move_right_amount = s->move_left_amount = s->inc_amount = s->dec_amount =
+      0;
   return s;
 }
 
@@ -19,27 +21,44 @@ void state_free(struct state *s) {
 
 void state_process_token(struct state *s, char c,
                          struct instruct_vec *instructs) {
-  if (s->prev_c != c) {
-    s->move_amount = 0;
-    s->change_amount = 0;
+  int c_changed = s->prev_c != c;
+
+  if (c_changed) {
+    switch (s->prev_c) {
+    case TK_MOVE_RIGHT:
+      instruct_vec_push(instructs, instruct_move_right(s->move_right_amount));
+      break;
+    case TK_MOVE_LEFT:
+      instruct_vec_push(instructs, instruct_move_left(s->move_left_amount));
+      break;
+    case TK_INC_CELL:
+      instruct_vec_push(instructs, instruct_inc(s->inc_amount));
+      break;
+    case TK_DEC_CELL:
+      instruct_vec_push(instructs, instruct_dec(s->dec_amount));
+      break;
+    }
+
+    s->move_right_amount = s->move_left_amount = s->inc_amount = s->dec_amount =
+        0;
   }
 
   switch (c) {
   case TK_MOVE_RIGHT:
     int_vec_reset(s->comment_buffer);
-    instruct_vec_push(instructs, instruct_move_right(++s->move_amount));
+    ++s->move_right_amount;
     break;
   case TK_MOVE_LEFT:
     int_vec_reset(s->comment_buffer);
-    instruct_vec_push(instructs, instruct_move_left(++s->move_amount));
+    ++s->move_left_amount;
     break;
   case TK_INC_CELL:
     int_vec_reset(s->comment_buffer);
-    instruct_vec_push(instructs, instruct_inc(++s->change_amount));
+    ++s->inc_amount;
     break;
   case TK_DEC_CELL:
     int_vec_reset(s->comment_buffer);
-    instruct_vec_push(instructs, instruct_inc(++s->change_amount));
+    ++s->dec_amount;
     break;
   case TK_LOOP_START:
     int_vec_reset(s->comment_buffer);
@@ -61,5 +80,6 @@ void state_process_token(struct state *s, char c,
     int_vec_push(s->comment_buffer, c);
     break;
   }
+
   s->prev_c = c;
 }

@@ -3,6 +3,8 @@
 #include <stdio.h>
 #include <stdlib.h>
 
+#define vec_for(vec_name, var) for (int var = 0; var < vec_name->len; ++var)
+
 #define vec_decl(name, T)                                                      \
   struct name##_vec {                                                          \
     int capacity;                                                              \

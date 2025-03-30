@@ -29,3 +29,5 @@ struct instruct instruct_loop_start();
 struct instruct instruct_loop_end();
 struct instruct instruct_write();
 struct instruct instruct_read();
+
+void instruct_sprint(struct instruct, char *dest);
