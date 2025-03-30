@@ -8,9 +8,10 @@
 #include <string.h>
 #include <sys/stat.h>
 
-vec_def(int, int) vec_def(instruct, struct instruct)
+vec_def(int, int)
+vec_def(instruct, struct instruct) 
 
-    int main(int argc, char **argv) {
+int main(int argc, char **argv) {
   if (argc < 2) {
     fprintf(stderr, "No file argument given.\n");
     return EXIT_FAILURE;
