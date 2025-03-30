@@ -1,10 +1,12 @@
 #include "state.h"
 #include "instruct.h"
+#include "main.h"
 #include "tokens.h"
 
 struct state *state_new() {
   struct state *s = malloc(sizeof(struct state));
   s->comment_buffer = int_vec_new(256);
+  s->prev_c = -1; // Ensure that it won't somehow match.
   return s;
 }
 
@@ -15,29 +17,37 @@ void state_free(struct state *s) {
   free(s);
 }
 
-void state_process_token(struct state *s, char c, struct instruct_vec *instructs) {
+void state_process_token(struct state *s, char c,
+                         struct instruct_vec *instructs) {
+  if (s->prev_c != c) {
+    s->move_amount = 0;
+    s->change_amount = 0;
+  }
+
   switch (c) {
   case TK_MOVE_RIGHT:
     int_vec_reset(s->comment_buffer);
-    instruct_vec_push(instructs, instruct_move_right(1));
+    instruct_vec_push(instructs, instruct_move_right(++s->move_amount));
     break;
   case TK_MOVE_LEFT:
     int_vec_reset(s->comment_buffer);
-    instruct_vec_push(instructs, instruct_move_left(1));
+    instruct_vec_push(instructs, instruct_move_left(++s->move_amount));
     break;
   case TK_INC_CELL:
     int_vec_reset(s->comment_buffer);
-    instruct_vec_push(instructs, instruct_inc(1));
+    instruct_vec_push(instructs, instruct_inc(++s->change_amount));
     break;
   case TK_DEC_CELL:
     int_vec_reset(s->comment_buffer);
-    instruct_vec_push(instructs, instruct_inc(1));
+    instruct_vec_push(instructs, instruct_inc(++s->change_amount));
     break;
   case TK_LOOP_START:
     int_vec_reset(s->comment_buffer);
+    instruct_vec_push(instructs, instruct_loop_start());
     break;
   case TK_LOOP_END:
     int_vec_reset(s->comment_buffer);
+    instruct_vec_push(instructs, instruct_loop_end());
     break;
   case TK_WRITE:
     int_vec_reset(s->comment_buffer);
@@ -51,4 +61,5 @@ void state_process_token(struct state *s, char c, struct instruct_vec *instructs
     int_vec_push(s->comment_buffer, c);
     break;
   }
+  s->prev_c = c;
 }

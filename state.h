@@ -5,7 +5,12 @@
 #include "main.h"
 
 struct state {
+  char prev_c;
+
   struct int_vec *comment_buffer;
+
+  int move_amount;
+  int change_amount;
 };
 
 struct state *state_new();

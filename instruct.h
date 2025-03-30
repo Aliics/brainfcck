@@ -5,6 +5,8 @@ enum instruct_type {
   INST_MOVE_LEFT,
   INST_INC,
   INST_DEC,
+  INST_LOOP_START,
+  INST_LOOP_END,
   INST_WRITE,
   INST_READ,
 };
@@ -23,5 +25,7 @@ struct instruct instruct_move_right(int n);
 struct instruct instruct_move_left(int n);
 struct instruct instruct_inc(int n);
 struct instruct instruct_dec(int n);
+struct instruct instruct_loop_start();
+struct instruct instruct_loop_end();
 struct instruct instruct_write();
 struct instruct instruct_read();
