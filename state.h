@@ -3,6 +3,7 @@
 #include "instruct.h"
 #include "main.h"
 #include "vec.h"
+#include "tokens.h"
 
 struct state {
   char prev_c;

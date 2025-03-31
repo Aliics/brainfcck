@@ -15,6 +15,7 @@
   void name##_vec_free(struct name##_vec *v);                                  \
   void name##_vec_push(struct name##_vec *v, T n);                             \
   T name##_vec_get(struct name##_vec *v, int i);                               \
+  T name##_vec_get_unsafe(struct name##_vec *v, int i);                        \
   void name##_vec_reset(struct name##_vec *v);                                 \
   void name##_vec_remove_at(struct name##_vec *v, int i);
 
@@ -58,6 +59,7 @@
                                                                                \
     return v->data[i];                                                         \
   }                                                                            \
+  T name##_vec_get_unsafe(struct name##_vec *v, int i) { return v->data[i]; }  \
                                                                                \
   void name##_vec_reset(struct name##_vec *v) {                                \
     v->capacity = 0;                                                           \

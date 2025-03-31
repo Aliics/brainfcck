@@ -1,4 +1,5 @@
 #include "main.h"
+#include "generate.h"
 #include "instruct.h"
 #include "state.h"
 #include "vec.h"
@@ -38,11 +39,15 @@ int main(int argc, char **argv) {
   if (debug_inst) {
     char inst_str[64];
     vec_for(instructs, i) {
-      instruct_sprint(instruct_vec_get(instructs, i), inst_str);
+      instruct_sprint(instruct_vec_get_unsafe(instructs, i), inst_str);
       printf("%s\n", inst_str);
     }
   }
 
+  char *output = generate(instructs);
+  printf("%s\n", output);
+
+  free(output);
   state_free(s);
   instruct_vec_free(instructs);
   fclose(f);
