@@ -7,13 +7,13 @@
 #include <string.h>
 
 char *generate(struct instruct_vec *instructs) {
-  int output_len = 19 + 17 + 21 + 14 + 10 + 1;
+  int output_len = 19 + 17 + 26 + 14 + 10 + 1;
   char *output = malloc((output_len + 1) * sizeof(char)); // extra +1 for \0
 
-  strcpy(output, "#include <stdio.h>\n"    // 19
-                 "int main(void) {\n"      // 17
-                 "int cells[256] = {0};\n" // 21
-                 "int cell = 0;\n");       // 14
+  strcpy(output, "#include <stdio.h>\n"        // 19
+                 "int main(void) {\n"          // 17
+                 "int cells[1 << 16] = {0};\n" // 26
+                 "int cell = 0;\n");           // 14
 
   char buffer[64] = {0};
   struct instruct inst;
