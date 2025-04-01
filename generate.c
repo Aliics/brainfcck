@@ -2,6 +2,7 @@
 #include "instruct.h"
 #include "main.h"
 #include "vec.h"
+#include <stdio.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -41,6 +42,7 @@ char *generate(struct instruct_vec *instructs) {
       sprintf(buffer, "printf(\"%%c\", cells[cell]);\n");
       break;
     case INST_READ:
+      sprintf(buffer, "cells[cell] = getchar();\n");
       break;
     }
     output_len += strlen(buffer);
@@ -54,7 +56,7 @@ char *generate(struct instruct_vec *instructs) {
     strcat(output, buffer);
   }
 
-  strcat(output, "return 1;\n" // 10
+  strcat(output, "return 0;\n" // 10
                  "}");         // 1
 
   return output;
