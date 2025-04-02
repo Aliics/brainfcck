@@ -11,9 +11,9 @@ user input and concatenates it onto the end of some nice output.
 To test it out, you need to compile brainfcck first, and then we can compile our examples.
 
 ```bash
-make # Create the binary
-./out/brainfcck -i test/greet.bf -o out/greet
-./out/greet
+make # Build brainfcck
+./out/brainfcck -i test/greet.bf -o out/greet # Compile using brainfcck
+./out/greet # Use it as an executable
 ```
 
 Our example, will look something like this:
