@@ -8,6 +8,16 @@ been created to develop this.
 In particular, a more *"complete program"* would be [greet.bf](test/greet.bf), which takes
 user input and concatenates it onto the end of some nice output.
 
+To test it out, you need to compile brainfcck first, and then we can compile our examples.
+
+```bash
+make # Create the binary
+./out/brainfcck -i test/greet.bf -o out/greet
+./out/greet
+```
+
+Our example, will look something like this:
+
 ```bf
 + just for the loop entrace
 [
@@ -42,7 +52,7 @@ write input
 ++++ ++++ ++ .
 ```
 
-This is compiled down to:
+This is compiled down to the approximate C:
 
 ```c
 #include <stdio.h>

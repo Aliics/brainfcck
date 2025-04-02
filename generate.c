@@ -8,7 +8,7 @@
 
 char *generate(struct instruct_vec *instructs) {
   int output_len = 19 + 17 + 26 + 14 + 10 + 1;
-  char *output = malloc((output_len + 1) * sizeof(char)); // extra +1 for \0
+  char *output = malloc(output_len + 1); // extra +1 for \0
 
   strcpy(output, "#include <stdio.h>\n"        // 19
                  "int main(void) {\n"          // 17
@@ -46,7 +46,7 @@ char *generate(struct instruct_vec *instructs) {
       break;
     }
     output_len += strlen(buffer);
-    char *grow = realloc(output, (output_len + 1) * sizeof(char));
+    char *grow = realloc(output, output_len + 1);
     if (grow == NULL) {
       free(output);
       fprintf(stderr, "Could not grow compiled output data\n");

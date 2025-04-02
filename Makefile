@@ -4,9 +4,9 @@ FLAGS = -Wall -I .
 
 BIN = brainfcck
 
-.PHONY: all clean build run
+.PHONY: all clean build
 
-all: clean build run
+all: clean build
 
 clean:
 	rm -rf $(OUT)
@@ -14,6 +14,3 @@ clean:
 build: $(wildcard *.c)
 	mkdir $(OUT)
 	$(CC) -o $(OUT)/$(BIN) $^ $(FLAGS)
-
-run:
-	$(OUT)/$(BIN)
